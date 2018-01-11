@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Ceibo from 'ceibo';
+import require from 'require';
 
 const { assert, get, isPresent } = Ember;
 
@@ -311,3 +312,11 @@ export function getProperty(object, pathToProp) {
 }
 
 export const assign = Ember.assign || Ember.merge;
+export const wait = function() {
+  if (require.has('ember-test-helpers')) {
+    const helpers = require('ember-test-helpers');
+    return helpers.settled || helpers.wait;
+  } else {
+    throw new Error('ember-test-helpers or @ember/test-helpers must be installed');
+  }
+}();

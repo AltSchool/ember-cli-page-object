@@ -2,12 +2,22 @@ import { moduleForProperty } from '../../../helpers/properties';
 import { create, isHidden } from 'ember-cli-page-object';
 
 moduleForProperty('isHidden', function(test) {
-  test('returns true when the element is hidden', async function(assert) {
+  test('returns true when the element has display: none', async function(assert) {
     let page = create({
       foo: isHidden('span')
     });
 
     await this.adapter.createTemplate(this, page, 'Lorem <span style="display:none">ipsum</span>');
+
+    assert.ok(page.foo);
+  });
+
+  test('returns true when the element has visibility: hidden', async function(assert) {
+    let page = create({
+      foo: isHidden('span')
+    });
+
+    await this.adapter.createTemplate(this, page, 'Lorem <span style="visibility: hidden">ipsum</span>');
 
     assert.ok(page.foo);
   });

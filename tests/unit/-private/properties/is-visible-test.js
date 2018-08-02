@@ -12,12 +12,22 @@ moduleForProperty('isVisible', function(test) {
     assert.ok(page.foo);
   });
 
-  test('returns false when the element is hidden', async function(assert) {
+  test('returns false when the element has display: none', async function(assert) {
     let page = create({
       foo: isVisible('span')
     });
 
     await this.adapter.createTemplate(this, page, 'Lorem <span style="display:none">ipsum</span>');
+
+    assert.ok(!page.foo);
+  });
+
+  test('returns false when the element has visibility: hidden', async function(assert) {
+    let page = create({
+      foo: isVisible('span')
+    });
+
+    await this.adapter.createTemplate(this, page, 'Lorem <span style="visibility:hidden">ipsum</span>');
 
     assert.ok(!page.foo);
   });

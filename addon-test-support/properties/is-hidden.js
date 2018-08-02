@@ -111,7 +111,7 @@ export function isHidden(selector, userOptions = {}) {
         let elements = context.find(selector, options);
 
         return every(elements, function(element) {
-          return element.is(':hidden');
+          return element.is(':hidden') || element.css('visibility') === 'hidden';
         });
       });
     }

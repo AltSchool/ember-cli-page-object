@@ -121,7 +121,7 @@ export function isVisible(selector, userOptions = {}) {
         }
 
         return every(elements, function(element) {
-          return element.is(':visible');
+          return element.is(':visible') && element.css('visibility') !== 'hidden';
         });
       });
     }
